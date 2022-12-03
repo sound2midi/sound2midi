@@ -7,20 +7,16 @@ class ListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final titles = ['bike', 'boat', 'bus', 'car',
-      'railway', 'run', 'subway', 'transit', 'walk'];
+    final titles = ["Song 1", "Song 2", "Song 3", "Song 4", "Song 5", "Song 6", "Song7"];
 
-    final icons = [Icons.directions_bike, Icons.directions_boat,
-      Icons.directions_bus, Icons.directions_car, Icons.directions_railway,
-      Icons.directions_run, Icons.directions_subway, Icons.directions_transit,
-      Icons.directions_walk];
+    final icons = Icons.graphic_eq;
 
     return ListView.builder(
       itemCount: titles.length,
       itemBuilder: (context, index) {
         return Card( //                           <-- Card widget
           child: ListTile(
-            leading: Icon(icons[index]),
+            leading: Icon(icons),
             title: Text(titles[index]),
           ),
         );
