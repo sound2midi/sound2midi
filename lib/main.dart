@@ -290,10 +290,22 @@ class ResultPage extends StatelessWidget {
           itemCount: data.length,
           itemBuilder: (context, index) {
             return Card(
-              //                           <-- Card widget
               child: ListTile(
                 leading: Icon(Icons.music_note),
-                title: Text(data[index].toString()),
+                title: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        data[index].name,
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                    Text(
+                      "(${data[index].freq.round().toString()}Hz)",
+                      textAlign: TextAlign.left,
+                    ),
+                  ],
+                ),
               ),
             );
           }),
@@ -408,7 +420,6 @@ Future<List<Note>> read_file(String path) async {
       minDiff = curDiff;
       noteName = i.value;
     }
-    ;
   }
   print(noteName);
 
