@@ -86,11 +86,15 @@ class _AudioRecorderState extends State<AudioRecorder> {
       return const SecondPage(title: 'Analyzing');
     }));
 
+    await Future.delayed(const Duration(seconds: 1));
+
+
     final freq = await read_file(path!);
 
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return ResultPage(data: freq);
-    }));
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) {
+          return ResultPage(data: freq);
+        }));
   }
 
   Future<void> _pause() async {
@@ -106,6 +110,9 @@ class _AudioRecorderState extends State<AudioRecorder> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("sound2midi"),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -119,12 +126,11 @@ class _AudioRecorderState extends State<AudioRecorder> {
               _buildText(),
             ],
           ),
-          if (_amplitude != null) ...[
-            const SizedBox(height: 40),
-            Text('Current: ${_amplitude?.current ?? 0.0}'),
-            Text('Max: ${_amplitude?.max ?? 0.0}'),
-          ],
-          TextButton(child: Text("abc"), onPressed: () {}),
+          // if (_amplitude != null) ...[
+          //  const SizedBox(height: 40),
+          //  Text('Current: ${_amplitude?.current ?? 0.0}'),
+          //  Text('Max: ${_amplitude?.max ?? 0.0}'),
+          // ],
         ],
       ),
     );
@@ -200,7 +206,10 @@ class _AudioRecorderState extends State<AudioRecorder> {
       return _buildTimer();
     }
 
-    return const Text("Waiting to record");
+    return const Text("Aufzeichnung starten", style: TextStyle(
+      fontWeight: FontWeight.w400,
+      fontSize: 20,
+    ));
   }
 
   Widget _buildTimer() {
@@ -282,7 +291,7 @@ class ResultPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Result:"),
+        title: Text("Noten"),
       ),
       body: ListView.builder(
           itemCount: data.length,
@@ -421,9 +430,10 @@ Future<List<Note>> read_file(String path) async {
           noteName = i.value;
         };
       }
+
       result.add(Note(name: noteName, freq: freq));
-      // print(noteName);
     });
+
     return result;
 }
 
